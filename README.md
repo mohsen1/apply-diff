@@ -41,7 +41,7 @@ _.applyDiff(source, destination);
 
 **In browser**
 
-include lodash or lodash and this module
+include lodash and this module
 ```html
 <script src="lodash.js"></script>
 <script src="apply-diff/index.js"></script>
