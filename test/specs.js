@@ -1,31 +1,37 @@
 'use strict';
 
+var _ = require('underscore');
 var expect = require('chai').expect;
-var applyDiff = require('..');
+var applyDiffModule = require('..');
+applyDiffModule(_);
 
 describe('module', function() {
   it('should export a function', function() {
-    expect(applyDiff).to.be.a.function;
+    expect(applyDiffModule).to.be.a.function;
+  });
+
+  it('should add applyDiff mixing to _ object', function(){
+    expect(_.applyDiff).to.be.a.function;
   });
 });
 
 describe('type check', function(){
   it('throws errors for no arguments', function(){
-    expect(function() { applyDiff(); }).to.throw(Error);
+    expect(function() { _.applyDiff(); }).to.throw(Error);
   });
 
   it('throws errors for one arguments', function(){
-    expect(function() { applyDiff({}); }).to.throw(Error);
+    expect(function() { _.applyDiff({}); }).to.throw(Error);
   });
 
   it('throws errors for number arguments', function(){
-    expect(function() { applyDiff(3, {}); }).to.throw(Error);
-    expect(function() { applyDiff({}, 5); }).to.throw(Error);
+    expect(function() { _.applyDiff(3, {}); }).to.throw(Error);
+    expect(function() { _.applyDiff({}, 5); }).to.throw(Error);
   });
 
   it('throws errors for string arguments', function(){
-    expect(function() { applyDiff('one', {}); }).to.throw(Error);
-    expect(function() { applyDiff({}, 'two'); }).to.throw(Error);
+    expect(function() { _.applyDiff('one', {}); }).to.throw(Error);
+    expect(function() { _.applyDiff({}, 'two'); }).to.throw(Error);
   });
 
 });
@@ -35,7 +41,7 @@ describe('shallow', function() {
     var source = {a: 1, b: 2, c: {}, d: []};
     var destination = {a: 1, b: 2, c: {}, d: []};
 
-    applyDiff(source, destination);
+    _.applyDiff(source, destination);
     expect(source).to.deep.equal(destination);
   });
 
@@ -43,7 +49,7 @@ describe('shallow', function() {
     var source = {a: 1, c: {}, d: []};
     var destination = {a: 1, b: 2, c: {}, d: []};
 
-    applyDiff(source, destination);
+    _.applyDiff(source, destination);
     expect(destination).to.not.have.property('b');
     expect(source).to.deep.equal(destination);
   });
@@ -52,7 +58,7 @@ describe('shallow', function() {
     var source = {a: 1, b: 2, c: {}, d: [], e: 'new'};
     var destination = {a: 1, b: 2, c: {}, d: []};
 
-    applyDiff(source, destination);
+    _.applyDiff(source, destination);
     expect(destination).to.have.property('e', 'new');
     expect(source).to.deep.equal(destination);
   });
@@ -61,7 +67,7 @@ describe('shallow', function() {
     var source = {a: 1, b: 2, c: {}, g: 100};
     var destination = {a: 1, b: 2, c: {}, d: []};
 
-    applyDiff(source, destination);
+    _.applyDiff(source, destination);
     expect(destination).to.not.have.property('d');
     expect(destination).to.have.property('g', 100);
     expect(source).to.deep.equal(destination);
@@ -93,7 +99,7 @@ describe('deep', function() {
       }
     };
 
-    applyDiff(source, destination);
+    _.applyDiff(source, destination);
     expect(source).to.deep.equal(destination);
   });
 
@@ -120,7 +126,7 @@ describe('deep', function() {
       }
     };
 
-    applyDiff(source, destination);
+    _.applyDiff(source, destination);
     expect(destination).to.not.have.deep.property('a.b.c.three');
     expect(source).to.deep.equal(destination);
   });
@@ -150,7 +156,7 @@ describe('deep', function() {
       }
     };
 
-    applyDiff(source, destination);
+    _.applyDiff(source, destination);
     expect(destination).to.have.deep.property('a.b.c.four', 4);
     expect(source).to.deep.equal(destination);
   });
@@ -179,7 +185,7 @@ describe('deep', function() {
       }
     };
 
-    applyDiff(source, destination);
+    _.applyDiff(source, destination);
     expect(destination).to.not.have.deep.property('a.b.c.three');
     expect(destination).to.have.deep.property('a.b.c.five', 5);
     expect(source).to.deep.equal(destination);

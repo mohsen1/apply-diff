@@ -1,6 +1,16 @@
 'use strict';
 
-var _ = require('underscore');
+var glob = null;
+
+if (typeof window !== 'undefined') {
+  glob = window
+} else {
+  glob = global;
+}
+
+if (typeof require === 'function') {
+  glob._ = require('underscore');
+}
 
 /*
  * Apply difference between two objects without without rewriting
@@ -81,4 +91,16 @@ function applyDiff(source, destination) {
   }
 }
 
-module.exports = applyDiff;
+if (typeof _ === 'object') {
+  _.mixin({
+    applyDiff: applyDiff
+  });
+}
+
+if (typeof module !== 'undefined') {
+  module.exports = function(_) {
+    _.mixin({
+      applyDiff: applyDiff
+    });
+  };
+}
