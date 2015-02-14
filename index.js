@@ -9,7 +9,7 @@ if (typeof window !== 'undefined') {
 }
 
 if (typeof require === 'function') {
-  glob._ = require('underscore');
+  glob._ = require('lodash');
 }
 
 /*

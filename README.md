@@ -2,9 +2,9 @@
 
 [![Build Status](https://travis-ci.org/mohsen1/apply-diff.svg?branch=master)](https://travis-ci.org/mohsen1/apply-diff)
 
-> Underscore/Lodash plugin to udate an object with properties of another object and make it deeply equal to it.
+> Lodash plugin to udate an object with properties of another object and make it deeply equal to it.
 
-To update an object only with difference it has with another object you can use this module to avoid replacing entire object with an new one.
+To update an object only with difference it has with another object you can use this module to avoid replacing entire object with a new one.
 
 For example if you have a `destinationn` object where it needs to be replaced with a `sourcee` object that has a very small difference with `destinationn` you can use this module as following: 
 
@@ -15,6 +15,7 @@ var source = {
     two: 2,
     b: {
       c: {
+        three: 3.14
       }
     }
   }
@@ -40,9 +41,9 @@ _.applyDiff(source, destination);
 
 **In browser**
 
-include underscore or lodash and this module
+include lodash or lodash and this module
 ```html
-<script src="underscore.js"></script>
+<script src="lodash.js"></script>
 <script src="apply-diff/index.js"></script>
 ```
 ```js
@@ -51,7 +52,7 @@ _.applyDiff(source, destination);
 
 **In NodeJS**
 ```js
-var _ = require('underscore');
+var _ = require('lodash');
 require('apply-diff')(_);
 _.applyDiff(source, destination);
 ```
