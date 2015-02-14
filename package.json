@@ -1,6 +1,6 @@
 {
   "name": "apply-diff",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "Underscore/Lodash plugin to udate an object with properties of another object and make it deeply equal to it.",
   "main": "index.js",
   "scripts": {
