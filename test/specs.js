@@ -191,3 +191,43 @@ describe('deep', function() {
     expect(source).to.deep.equal(destination);
   });
 });
+
+
+describe('arrays', function(){
+  it('should do nothing if source and destination is the same', function() {
+    var source = [1,2,3,4];
+    var destination = [1,2,3,4];
+    _.applyDiff(source, destination);
+
+    expect(source).to.be.deep.equal(destination);
+  });
+
+  it('removes a property from destination that was removed from source', function() {
+    var source = [1, 2, 3, 4];
+    var destination = [1, 2, 3, 4, 5];
+
+    _.applyDiff(source, destination);
+    expect(destination.length).to.be.equal(4);
+    expect(source).to.deep.equal(destination);
+  });
+
+  it('adds a new property in source to destination', function() {
+    var source = [1, 2, 3, 4, 5];
+    var destination = [1, 2, 3, 4];
+
+    _.applyDiff(source, destination);
+    expect(destination.length).to.be.equal(5);
+    expect(source).to.deep.equal(destination);
+  });
+
+  it('replaces a property in destination that appeared in source', function() {
+    var source = [1, 2, 3, 100];
+    var destination = [1, 2, 3, 4];
+
+    _.applyDiff(source, destination);
+    expect(destination.length).to.be.equal(4);
+    expect(destination).to.contain(100);
+    expect(destination).not.to.contain(4);
+    expect(source).to.deep.equal(destination);
+  });
+});
