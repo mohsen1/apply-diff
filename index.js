@@ -95,15 +95,17 @@ function applyDiff(source, destination) {
   }
 }
 
+var lodash = _.runInContext();
+
 if (typeof _ === 'function') {
-  _.mixin({
+  lodash.mixin({
     applyDiff: applyDiff
   });
 }
 
 if (typeof module !== 'undefined') {
   module.exports = function(_) {
-    _.mixin({
+    lodash.mixin({
       applyDiff: applyDiff
     });
   };
