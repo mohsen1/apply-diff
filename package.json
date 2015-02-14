@@ -1,13 +1,14 @@
 {
   "name": "apply-diff",
   "version": "1.0.0",
-  "description": "Apply diiferences of an object with another to it",
+  "description": "Underscore/Lodash plugin to udate an object with properties of another object and make it deeply equal to it.",
   "main": "index.js",
   "scripts": {
     "test": "./node_modules/mocha/bin/mocha test",
     "watch": "./node_modules/mocha/bin/mocha test -w"
   },
   "author": "Mohsen Azimi <me@azimi.me>",
+  "repository": "https://github.com/mohsen1/apply-diff",
   "license": "MIT",
   "dependencies": {
     "underscore": "^1.7.0"
@@ -15,5 +16,10 @@
   "devDependencies": {
     "chai": "^2.0.0",
     "mocha": "^2.1.0"
-  }
+  },
+  "keywords": [
+    "underscore",
+    "lodash",
+    "diff"
+  ]
 }
