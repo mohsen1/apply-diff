@@ -91,7 +91,7 @@ function applyDiff(source, destination) {
   }
 }
 
-if (typeof _ === 'object') {
+if (typeof _ === 'function') {
   _.mixin({
     applyDiff: applyDiff
   });
