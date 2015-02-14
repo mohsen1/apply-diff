@@ -41,6 +41,10 @@ function applyDiff(source, destination) {
 
     extraKeys.forEach(function (key) {
       delete destination[key];
+
+      if (_.isArray(destination)) {
+        destination.length--;
+      }
     });
   }
 
