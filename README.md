@@ -49,7 +49,7 @@ _.applyDiff(source, destination);
 
 **In NodeJS**
 ```js
-var underscore = require('underscore');
+var _ = require('underscore');
 require('apply-diff')(_);
 _.applyDiff(source, destination);
 ```
