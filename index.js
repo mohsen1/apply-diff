@@ -1,113 +1,106 @@
-'use strict';
+(function(root){
 
-var glob = null;
+    'use strict';
 
-if (typeof window !== 'undefined') {
-  glob = window
-} else {
-  glob = global;
-}
+    var lodash = (typeof require === 'function') ? require('lodash') : root._;
 
-if (typeof require === 'function') {
-  glob._ = require('lodash');
-}
+    /*
+     * Apply difference between two objects without without rewriting
+     * destination object
+     * @param source {object} - the source object. Destination should be exactly
+     *   equal to this object after using applyDiff
+     * @param destination {object} - the object that will get modified to be
+     *   equal to source object.
+    */
+    function applyDiff(source, destination) {
 
-/*
- * Apply difference between two objects without without rewriting
- * destination object
- * @param source {object} - the source object. Destination should be exactly
- *   equal to this object after using applyDiff
- * @param destination {object} - the object that will get modified to be
- *   equal to source object.
-*/
-function applyDiff(source, destination) {
-
-  // type check
-  if (!_.isObject(source)) {
-    throw new Error('source should be an object');
-  }
-  if (!_.isObject(destination)) {
-    throw new Error('destination should be an object');
-  }
-
-  var sourceKeys = Object.keys(source);
-  var destinationKeys = Object.keys(destination);
-  var extraKeys;
-
-  // if there are fewer keys in source, remove the extra keys from
-  // destination
-  if (sourceKeys.length < destinationKeys.length) {
-    extraKeys = _.difference(destinationKeys, sourceKeys);
-
-    extraKeys.forEach(function (key) {
-
-      if (_.isArray(destination)) {
-        _.remove(destination, function (item, index){
-            return index == key;
-        });
-      } else {
-        delete destination[key];
+      // type check
+      if (!lodash.isObject(source)) {
+        throw new Error('source should be an object');
       }
-    });
-  }
+      if (!lodash.isObject(destination)) {
+        throw new Error('destination should be an object');
+      }
 
-  // if there are more keys in source, add the extra keys to destination
-  if (sourceKeys.length > destinationKeys.length) {
-    extraKeys = _.difference(sourceKeys, destinationKeys);
+      var sourceKeys = Object.keys(source);
+      var destinationKeys = Object.keys(destination);
+      var extraKeys;
 
-    extraKeys.forEach(function (key) {
-      destination[key] = source[key];
-    });
-  }
+      // if there are fewer keys in source, remove the extra keys from
+      // destination
+      if (sourceKeys.length < destinationKeys.length) {
+        extraKeys = lodash.difference(destinationKeys, sourceKeys);
 
-  // if sourceKeys and destinationKeys are not equal, but have the same
-  // length then find the diff and apply it.
-  //
-  // example: source: ['one', 'two'] and destination: ['one', 'three']
-  // remove 'three' from destination and add 'two' to source
-  if (!_.isEqual(sourceKeys, destinationKeys)) {
-    var newKeys = _.difference(sourceKeys, destinationKeys);
+        extraKeys.forEach(function (key) {
 
-    newKeys.forEach(function (key) {
-      destination[key] = source[key];
-    });
+          if (lodash.isArray(destination)) {
+            lodash.remove(destination, function (item, index){
+                return index == key;
+            });
+          } else {
+            delete destination[key];
+          }
+        });
+      }
 
-    extraKeys = _.difference(destinationKeys, sourceKeys);
-    extraKeys.forEach(function (key) {
-      delete destination[key];
-    });
-  }
+      // if there are more keys in source, add the extra keys to destination
+      if (sourceKeys.length > destinationKeys.length) {
+        extraKeys = lodash.difference(sourceKeys, destinationKeys);
 
-  // for each property in source check if the value of that property is
-  // deeply equal to destination:
-  //  if the value is deeply equal do nothing
-  //  if the value is not deeply equal, call applyDiff with source value to
-  //  destination value
-  for (var property in source) {
+        extraKeys.forEach(function (key) {
+          destination[key] = source[key];
+        });
+      }
 
-    // if there is a difference between source and destination
-    if (!_.isEqual(source[property], destination[property])) {
+      // if sourceKeys and destinationKeys are not equal, but have the same
+      // length then find the diff and apply it.
+      //
+      // example: source: ['one', 'two'] and destination: ['one', 'three']
+      // remove 'three' from destination and add 'two' to source
+      if (!lodash.isEqual(sourceKeys, destinationKeys)) {
+        var newKeys = lodash.difference(sourceKeys, destinationKeys);
 
-      // if source[property] is not an object, just override
-      if (!_.isObject(source[property])) {
-        destination[property] = source[property];
-      } else {
-        applyDiff(source[property], destination[property]);
+        newKeys.forEach(function (key) {
+          destination[key] = source[key];
+        });
+
+        extraKeys = lodash.difference(destinationKeys, sourceKeys);
+        extraKeys.forEach(function (key) {
+          delete destination[key];
+        });
+      }
+
+      // for each property in source check if the value of that property is
+      // deeply equal to destination:
+      //  if the value is deeply equal do nothing
+      //  if the value is not deeply equal, call applyDiff with source value to
+      //  destination value
+      for (var property in source) {
+
+        // if there is a difference between source and destination
+        if (!lodash.isEqual(source[property], destination[property])) {
+
+          // if source[property] is not an object, just override
+          if (!lodash.isObject(source[property])) {
+            destination[property] = source[property];
+          } else {
+            applyDiff(source[property], destination[property]);
+          }
+        }
       }
     }
-  }
-}
 
-if (typeof _ === 'function') {
-  _.mixin({
-    applyDiff: applyDiff
-  });
-}
+    if (typeof root._ === 'function') {
+      root._.mixin({
+        applyDiff: applyDiff
+      });
+    }
 
-if (typeof module !== 'undefined') {
-  module.exports = function(_) {
-    _.mixin({
-      applyDiff: applyDiff
-    });
-  };
-}
+    if (typeof module !== 'undefined') {
+      module.exports = function(lodash) {
+        lodash.mixin({
+          applyDiff: applyDiff
+        });
+      };
+    }
+})(this);
