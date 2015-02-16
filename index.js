@@ -40,10 +40,13 @@ function applyDiff(source, destination) {
     extraKeys = _.difference(destinationKeys, sourceKeys);
 
     extraKeys.forEach(function (key) {
-      delete destination[key];
 
       if (_.isArray(destination)) {
-        destination.length--;
+        _.remove(destination, function (item, index){
+            return index == key;
+        });
+      } else {
+        delete destination[key];
       }
     });
   }
