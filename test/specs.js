@@ -72,6 +72,14 @@ describe('shallow', function() {
     expect(destination).to.have.property('g', 100);
     expect(source).to.deep.equal(destination);
   });
+
+  it('replaces the non-object values in destination', function() {
+    var source = {a: {object: true}};
+    var destination = {a: 'string'};
+
+    _.applyDiff(source, destination);
+    expect(destination.a).to.be.a.object;
+  });
 });
 
 describe('deep', function() {

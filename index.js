@@ -80,8 +80,9 @@
         // if there is a difference between source and destination
         if (!lodash.isEqual(source[property], destination[property])) {
 
-          // if source[property] is not an object, just override
-          if (!lodash.isObject(source[property])) {
+          // if destination[property] is not an object, there is no need for
+          // applying the diff, we can override entire destination[property]
+          if (!lodash.isObject(destination[property])) {
             destination[property] = source[property];
           } else {
             applyDiff(source[property], destination[property]);
