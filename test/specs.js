@@ -80,6 +80,14 @@ describe('shallow', function() {
     _.applyDiff(source, destination);
     expect(destination.a).to.be.a.object;
   });
+
+  it('replaces the non-object values in destination', function() {
+    var source = {a: 'string'};
+    var destination = {a: {object: true}};
+
+    _.applyDiff(source, destination);
+    expect(destination.a).to.be.a.string;
+  });
 });
 
 describe('deep', function() {
