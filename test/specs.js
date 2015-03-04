@@ -246,4 +246,29 @@ describe('arrays', function(){
     expect(destination).not.to.contain(4);
     expect(source).to.deep.equal(destination);
   });
+
+  it('should update objects inside arrays deeply', function(){
+    var source = {one: [{two: 3}]};
+    var destination = {one: [{two: 2}]};
+
+    _.applyDiff(source, destination);
+    expect(destination.one[0].two).to.equal(3);
+  });
+
+  it('should remove property from objects inside arrays deeply', function() {
+    var source = {one: [{}]};
+    var destination = {one: [{two: 2}]};
+
+    _.applyDiff(source, destination);
+    expect(destination.one[0].two).to.be.undefined;
+    expect(destination.one[0]).to.be.empty;
+  });
+
+  it('should add property items to objects inside arrays deeply', function() {
+    var source = {one: [{two: 2, three: 3}]};
+    var destination = {one: [{two: 2}]};
+
+    _.applyDiff(source, destination);
+    expect(destination.one[0].three).to.equal(3);
+  });
 });
