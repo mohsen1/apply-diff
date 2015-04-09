@@ -2,7 +2,7 @@
 
 [![Build Status](https://travis-ci.org/mohsen1/apply-diff.svg?branch=master)](https://travis-ci.org/mohsen1/apply-diff)
 
-> Lodash plugin to udate an object with properties of another object and make it deeply equal to it.
+> Lodash plugin to update an object with properties of another object and make it deeply equal to it.
 
 To update an object only with difference it has with another object you can use this module to avoid replacing entire object with a new one.
 
