@@ -1,7 +1,7 @@
 {
   "name": "apply-diff",
   "main": "index.js",
-  "version": "1.2.4",
+  "version": "1.2.5",
   "homepage": "https://github.com/mohsen1/apply-diff",
   "authors": [
     "Mohsen Azimi <me@azimi.me>"
